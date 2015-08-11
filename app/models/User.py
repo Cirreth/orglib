@@ -1,18 +1,16 @@
 # coding: utf-8
 import json
-import uuid
 import re
 from app import db
+from flask_login import UserMixin
 from webargs import Arg
 
 
-class User(db.Model):
-    __tablename__ = 'user'
+class User(db.Model, UserMixin):
 
     # Entity fields
-    id = db.Column('login', db.String(30), primary_key=True, nullable=False)
-    id = db.Column('password', db.String(30), primary_key=True, nullable=False)
-    full_name = db.Column('full_name', db.String(60), nullable=True)
+    login = db.Column('login', db.String(30), primary_key=True, nullable=False)
+    password = db.Column('password', db.String(30), nullable=False)
     email = db.Column('email', db.String(100), nullable=False)
     is_admin = db.Column('is_admin', db.Boolean, nullable=False)
 
@@ -23,17 +21,18 @@ class User(db.Model):
         return {
             'login': self.login,
             'password': self.password,
-            'full_name': self.full_name,
             'email': self.email,
             'is_admin': self.is_admin
         }
+
+    def get_id(self):
+        return self.login
 
     @classmethod
     def get_input_validator(cls):
         return {
             'login': Arg(str, required=True, validate=lambda p: re.match(r'^[a-zA-Z]+[a-zA-Z0-9]*$', p) is not None),
             'password': Arg(str, required=True, validate=lambda p: re.match(r'^.{3,}$', p) is not None),
-            'full_name': Arg(str, required=True, validate=lambda p: len(p)<=30),
             'email': Arg(str, required=True, validate=lambda p: re.match(r'.*@.*', p) is not None)
         }
 
@@ -43,7 +42,7 @@ class User(db.Model):
 
     @classmethod
     def get_all(cls):
-        return cls.query.order_by(cls.full_name).all()
+        return cls.query.all()
 
     # @classmethod
     # def get_filtered(cls, filter_str, page=0, page_size=10):

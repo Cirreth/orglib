@@ -12,19 +12,28 @@
 <br/>
     <div class="container col-md-4 col-md-offset-4">
 
-        <form class="panel panel-default" action="" method="POST">
+        <form class="panel panel-default" action="{{ url_for('login') }}" method="POST">
 
             <div class="panel-heading text-center">
                 <h2>Вход в систему</h2>
-                <h5>далопдлополавплдвадолпва</h5>
             </div>
 
             <div class="panel-body">
 
                 <div class="form-group">
-                    <label for="code">Введите пароль</label>
-                    <input class="form-control" type="password" name="code" id="code">
+                    <a class="pull-right" href="{{ url_for('register') }}">Зарегистрироваться</a>
                 </div>
+
+                <div class="form-group">
+                    <label for="login">Логин</label>
+                    <input class="form-control" type="text" name="login" id="login">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Введите пароль</label>
+                    <input class="form-control" type="password" name="password" id="password">
+                </div>
+
                 <div class="form-group">
                     <button class="btn btn-primary col-md-12">Войти</button>
                 </div>

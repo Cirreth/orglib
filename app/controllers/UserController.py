@@ -18,7 +18,6 @@ def register():
     user = User()
     user.login = args['login']
     user.password = args['password']
-    user.full_name = args['fullName']
     user.email = args['email']
     user.is_admin = False
     user.save()

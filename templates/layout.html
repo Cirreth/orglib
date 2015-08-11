@@ -8,6 +8,20 @@
 
 <body>
 
+    <header class="navbar navbar-static-top" style="margin-top: 10px;">
+        <div class="container">
+            <div class="col-md-8">
+                <h4>Библиотека им. Ленина</h4>
+            </div>
+            <div class="col-md-3 text-right">
+                <a class="btn btn-default">Профиль: <b>{{ current_user.login }}</b></a>
+            </div>
+            <div class="col-md-1">
+                <a class="btn btn-primary" href=" {{ url_for('logout') }}">Выйти</a>
+            </div>
+        </div>
+    </header>
+
     {% block body %}{% endblock %}
 
     <!-- js -->
