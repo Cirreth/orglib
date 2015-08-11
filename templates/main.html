@@ -1,7 +1,26 @@
 {% extends "layout.html" %}
 {% block body %}
 
-<div class="container">
+<div class="container col-md-1">
+
+    <h4>Действия</h4>
+    <hr>
+
+    <div class="form-group">
+        <button type="text" class="btn btn-default">Добавить книгу</button>
+    </div>
+
+    <div class="form-group">
+        <button type="text" class="btn btn-default">Заказы</button>
+    </div>
+
+    <div class="form-group">
+        <button type="text" class="btn btn-default">Публичная библиотека</button>
+    </div>
+
+</div>
+
+<div class="container col-md-10 col-md-offset-1">
 
     <h3>Здравствуйте, {{ current_user.login }}!</h3>
 
