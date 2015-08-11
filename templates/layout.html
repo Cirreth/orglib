@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>orglib</title>
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/w2ui-1.4.3.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -11,22 +12,26 @@
     <header class="navbar navbar-static-top" style="margin-top: 10px;">
         <div class="container">
             <div class="col-md-8">
-                <h4>Библиотека им. Ленина</h4>
+                <h4><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Организация библиотеки</h4>
             </div>
+            {% if current_user.is_authenticated() %}
             <div class="col-md-3 text-right">
                 <a class="btn btn-default">Профиль: <b>{{ current_user.login }}</b></a>
             </div>
             <div class="col-md-1">
                 <a class="btn btn-primary" href=" {{ url_for('logout') }}">Выйти</a>
             </div>
+            {% endif %}
         </div>
     </header>
+    <hr>
 
     {% block body %}{% endblock %}
 
     <!-- js -->
     <script type="text/javascript" src="/static/js/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/js/w2ui-1.4.3.min.js"></script>
 
     {% block scripts %}{% endblock %}
 

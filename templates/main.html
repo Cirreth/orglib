@@ -3,31 +3,67 @@
 
 <div class="container">
 
-    <div class="panel panel-default">
+    <h3>Здравствуйте, {{ current_user.login }}!</h3>
 
-        <div class="panel-heading clearfix">
-            <div class="form-group">
-                <div class="col-md-6">
+    <div id="grid" style="width: 100%; height: 400px;">
 
-                </div>
-                <a class="btn btn-success col-md-1" style="color:white;">
-                    <!--<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>-->
-                    Добавить
-                </a>
-                <div class="col-md-4">
-                    <input id="filterInput" type="text" class="form-control"/>
-                </div>
-                <button id="search" class="btn btn-default col-md-1">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                </button>
-            </div>
-        </div>
 
-        <div id="table-container" class="panel-body">
-            <!-- content here -->
-        </div>
 
     </div>
+<!--
+
+
+        <div class="panel panel-default">
+
+            <div class="panel-heading">123</div>
+            <div class="panel-body">asdasd</div>
+
+        </div>
+-->
+
 
 </div>
 {% endblock %}
+
+
+{% block scripts %}
+
+<script>
+
+    var downloadIcon = '<div style="width: 100%; text-align: center;"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></div>';
+    var shareIcon = '<div style="width: 100%; text-align: center;"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span></div>';
+
+    $('#grid').w2grid({
+    name: 'grid',
+    header: 'List of Names',
+    show: {
+        toolbar: true,
+        footer: true
+    },
+    columns: [
+        { field: 'authorName', caption: 'Имя автора', size: '15%', sortable: true, attr: 'align=center' },
+        { field: 'authorLastName', caption: 'Фамилия автора', size: '15%', sortable: true, resizable: true },
+        { field: 'name', caption: 'Название книги', size: '40%', sortable: true, resizable: true },
+        { field: 'year', caption: 'Год выпуска', size: '10%', resizable: true },
+        { field: 'download', caption: 'Скачать', size: '10%', resizable: true },
+        { field: 'share', caption: 'Поделиться', size: '10%', resizable: true }
+    ],
+    searches: [
+        { field: 'authorName', caption: 'Имя автора', type: 'text' },
+        { field: 'authorLastName', caption: 'Фамилия автора', type: 'text' },
+        { field: 'name', caption: 'Название книги', type: 'text' },
+    ],
+    sortData: [{ field: 'recid', direction: 'ASC' }],
+    records: [
+        { recid: 1, authorName: 'John', authorLastName: 'doe', name: 'Властелин колец', year: '3.4.2012', download: downloadIcon, share: shareIcon },
+        { recid: 2, authorName: 'Stuart', authorLastName: 'Motzart', name: 'Властелин колец', year: '3.4.2012', download: downloadIcon, share: shareIcon },
+        { recid: 3, authorName: 'Jin', authorLastName: 'Franson', name: 'Властелин колец', year: '3.4.2012', download: downloadIcon, share: shareIcon },
+        { recid: 4, authorName: 'Susan', authorLastName: 'Ottie', name: 'Властелин колец', year: '3.4.2012', download: downloadIcon, share: shareIcon },
+        { recid: 5, authorName: 'Kelly', authorLastName: 'Silver', name: 'Властелин колец', year: '3.4.2012', download: downloadIcon, share: shareIcon },
+        { recid: 6, authorName: 'Francis', authorLastName: 'Gatos', name: 'Властелин колец', year: '3.4.2012', download: downloadIcon, share: shareIcon }
+    ]
+});
+</script>
+{% endblock %}
+
+
