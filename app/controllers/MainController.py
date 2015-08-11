@@ -5,6 +5,6 @@ from app import app
 
 
 @app.route("/")
-# @login_required
+@login_required
 def main():
     return render_template('index.html')
