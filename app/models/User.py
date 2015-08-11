@@ -2,8 +2,8 @@
 import json
 import uuid
 import re
-from sqlalchemy import and_
 from app import db
+from webargs import Arg
 
 
 class User(db.Model):
@@ -11,6 +11,7 @@ class User(db.Model):
 
     # Entity fields
     id = db.Column('login', db.String(30), primary_key=True, nullable=False)
+    id = db.Column('password', db.String(30), primary_key=True, nullable=False)
     full_name = db.Column('full_name', db.String(60), nullable=True)
     email = db.Column('email', db.String(100), nullable=False)
     is_admin = db.Column('is_admin', db.Boolean, nullable=False)
@@ -21,14 +22,20 @@ class User(db.Model):
     def dict_repr(self):
         return {
             'login': self.login,
+            'password': self.password,
             'full_name': self.full_name,
             'email': self.email,
             'is_admin': self.is_admin
         }
 
     @classmethod
-    def create_table(cls):
-        cls.__table__.create(db.engine)
+    def get_input_validator(cls):
+        return {
+            'login': Arg(str, required=True, validate=lambda p: re.match(r'^[a-zA-Z]+[a-zA-Z0-9]*$', p) is not None),
+            'password': Arg(str, required=True, validate=lambda p: re.match(r'^.{3,}$', p) is not None),
+            'full_name': Arg(str, required=True, validate=lambda p: len(p)<=30),
+            'email': Arg(str, required=True, validate=lambda p: re.match(r'.*@.*', p) is not None)
+        }
 
     @classmethod
     def get(cls, id):

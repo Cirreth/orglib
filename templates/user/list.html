@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+{% block body %}
+<header class="navbar navbar-static-top text-center">
+  <h4>Библиотека им. Ленина</h4>
+</header>
+
+<div class="container col-md-6 col-md-offset-3">
+
+    <div class="panel panel-default">
+
+        <h4>Пользователи</h4>
+
+        <table class="table table-striped">
+            <tr>
+                <th>Логин</th>
+                <th>ФИО</th>
+                <th>Электронная почта</th>
+                <th>Администратор</th>
+            </tr>
+            {% for u in users %}
+            <tr>
+                <td>{{u.login}}</td>
+                <td>{{u.full_name}}</td>
+                <td>{{u.email}}</td>
+                <td>{{u.is_admin}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+    </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+
+    $(document).ready(function() {
+
+        var passwordsMatch = true;
+
+        $('#password, #password2').keyup(function() {
+
+            var pwd = $('#password').val();
+            var pwd2 = $('#password2').val();
+
+            passwordsMatch = pwd === pwd2;
+
+            if (!passwordsMatch) {
+                $('#validationMessages').html('Пароли не совпадают');
+                $('#validationMessages').show();
+                $('button[type="submit"]').attr('disabled', true);
+            } else {
+                $('#validationMessages').hide();
+                $('button[type="submit"]').attr('disabled', false);
+            }
+
+        });
+
+    });
+
+</script>
+{% endblock %}

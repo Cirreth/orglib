@@ -7,4 +7,4 @@ from app import app
 @app.route("/")
 @login_required
 def main():
-    return render_template('index.html')
+    return render_template('main.html')

@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block body %}
+<header class="navbar navbar-static-top text-center">
+  <h4>Библиотека им. Ленина</h4>
+</header>
+
+<div class="container">
+
+    <div class="panel panel-default">
+
+        <div class="panel-heading clearfix">
+            <div class="form-group">
+                <div class="col-md-6">
+
+                </div>
+                <a class="btn btn-success col-md-1" style="color:white;">
+                    <!--<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>-->
+                    Добавить
+                </a>
+                <div class="col-md-4">
+                    <input id="filterInput" type="text" class="form-control"/>
+                </div>
+                <button id="search" class="btn btn-default col-md-1">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                </button>
+            </div>
+        </div>
+
+        <div id="table-container" class="panel-body">
+            <!-- content here -->
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}
