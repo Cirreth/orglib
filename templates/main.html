@@ -3,11 +3,11 @@
 
 <div class="container col-md-1">
 
-    <h4>Действия</h4>
+    <h4  style="margin-top: 20px;">Действия</h4>
     <hr>
 
     <div class="form-group">
-        <button type="text" class="btn btn-default">Добавить книгу</button>
+        <button type="text" class="btn btn-success"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Добавить книгу</button>
     </div>
 
     <div class="form-group">
@@ -24,7 +24,84 @@
 
     <h3>Здравствуйте, {{ current_user.login }}!</h3>
 
-    <div id="grid" style="width: 100%; height: 300px;">
+    <div class="panel panel-default">
+
+            <div class="panel-body">
+                
+                <table class="table table-striped" id="books">
+                    <caption>Ваши книги</caption>
+                    <tr>
+                        <th width="30%">Фамилия и имя автора</th>
+                        <th width="40%">Название книги</th>
+                        <th width="10%">Год издания</th>
+                        <th width="10%">Загрузить</th>
+                        <th width="10%">Поделиться</th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div class="form-group form-group-sm">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="filterAuthorName" placeholder="Автор">
+                                    <div class="input-group-addon btn">
+                                        <span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="form-group form-group-sm">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="filterBookName" placeholder="Книга">
+                                    <div class="input-group-addon btn">
+                                        <span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="form-group form-group-sm">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="filterYear" placeholder="Год">
+                                    <div class="input-group-addon btn">
+                                        <span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>William Somerset Maugham</td>
+                        <td>The Moon and Sixpence</td>
+                        <td>1919</td>
+                        <td  align="center"><a href="#" class="btn btn-default"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a></td>
+                        <td  align="center"><a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span></a></td>
+                    </tr>
+                    <tr>
+                        <td>William Somerset Maugham</td>
+                        <td>The Razor’s Edge</td>
+                        <td>1944</td>
+                        <td  align="center"><a href="#" class="btn btn-default"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a></td>
+                        <td  align="center"><a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span></a></td>
+                    </tr>
+                    <tr>
+                        <td>William Somerset Maugham</td>
+                        <td>The Moon and Sixpence</td>
+                        <td>1919</td>
+                        <td  align="center"><a href="#" class="btn btn-default"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a></td>
+                        <td  align="center"><a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span></a></td>
+                    </tr>
+                    <tr>
+                        <td>William Somerset Maugham</td>
+                        <td>The Razor’s Edge</td>
+                        <td>1944</td>
+                        <td  align="center"><a href="#" class="btn btn-default"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a></td>
+                        <td  align="center"><a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span></a></td>
+                    </tr>
+                </table>
+
+            </div>
 
     </div>
 
@@ -35,10 +112,10 @@
             <div class="panel-heading">Лента новостей</div>
             <div class="panel-body">
 
-                <p>Пользователь ... поделился ....</p>
-                <p>Пользователь ... поделился ....</p>
-                <p>Пользователь ... поделился ....</p>
-                <p>Пользователь ... поделился ....</p>
+                <p class="bg-warning">Пользователь ... поделился ....</p>
+                <p class="bg-warning">Пользователь ... поделился ....</p>
+                <p class="bg-warning">Пользователь ... поделился ....</p>
+                <p class="bg-warning">Пользователь ... поделился ....</p>
 
             </div>
 
@@ -50,42 +127,30 @@
 
 
 {% block scripts %}
-
 <script>
 
-    var downloadIcon = '<div style="width: 100%; text-align: center;"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></div>';
-    var shareIcon = '<div style="width: 100%; text-align: center;"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span></div>';
+    $(document).ready(function() {
 
-    $('#grid').w2grid({
-    name: 'grid',
-    header: 'List of Names',
-    show: {
-        toolbar: true,
-        footer: true
-    },
-    columns: [
-        { field: 'authorName', caption: 'Имя автора', size: '15%', sortable: true, attr: 'align=center' },
-        { field: 'authorLastName', caption: 'Фамилия автора', size: '15%', sortable: true, resizable: true },
-        { field: 'name', caption: 'Название книги', size: '40%', sortable: true, resizable: true },
-        { field: 'year', caption: 'Год выпуска', size: '10%', resizable: true },
-        { field: 'download', caption: 'Скачать', size: '10%', resizable: true },
-        { field: 'share', caption: 'Поделиться', size: '10%', resizable: true }
-    ],
-    searches: [
-        { field: 'authorName', caption: 'Имя автора', type: 'text' },
-        { field: 'authorLastName', caption: 'Фамилия автора', type: 'text' },
-        { field: 'name', caption: 'Название книги', type: 'text' },
-    ],
-    sortData: [{ field: 'recid', direction: 'ASC' }],
-    records: [
-        { recid: 1, authorName: 'John', authorLastName: 'doe', name: 'Властелин колец', year: '3.4.2012', download: downloadIcon, share: shareIcon },
-        { recid: 2, authorName: 'Stuart', authorLastName: 'Motzart', name: 'Властелин колец', year: '3.4.2012', download: downloadIcon, share: shareIcon },
-        { recid: 3, authorName: 'Jin', authorLastName: 'Franson', name: 'Властелин колец', year: '3.4.2012', download: downloadIcon, share: shareIcon },
-        { recid: 4, authorName: 'Susan', authorLastName: 'Ottie', name: 'Властелин колец', year: '3.4.2012', download: downloadIcon, share: shareIcon },
-        { recid: 5, authorName: 'Kelly', authorLastName: 'Silver', name: 'Властелин колец', year: '3.4.2012', download: downloadIcon, share: shareIcon },
-        { recid: 6, authorName: 'Francis', authorLastName: 'Gatos', name: 'Властелин колец', year: '3.4.2012', download: downloadIcon, share: shareIcon }
-    ]
-});
+        var hidden = undefined;
+
+        $('#books input').keyup(function() {
+
+            var filter = $(this).val();
+            var col = $(this).closest("th").index();
+
+            if (hidden !== undefined) hidden.show();
+
+            hidden = $(this).closest("table")
+            .find("tr td:nth-child(" + (col+1) + ")")
+            .filter(function(_, elm) { z =$(elm); return $(elm).html().toLowerCase().indexOf(filter.toLowerCase())==-1 && $(elm).is('td') })
+            .parent();
+
+            hidden.hide();
+
+        });
+
+    });
+
 </script>
 {% endblock %}
 
