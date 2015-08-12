@@ -1,0 +1,82 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div class="container col-md-6 col-md-offset-3">
+
+    <div class="panel panel-default">
+
+        <div class="panel-heading clearfix">
+            <div class="form-group">
+                <div class="col-md-11">
+                    <h4>Создать новый заказ</h4>
+                </div>
+                <a class="btn btn-default col-md-1" href="{{ url_for('main') }}">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                </a>
+
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <form action="{{url_for('register')}}" method="POST" name="patient">
+
+                <div class="form-group">
+                    <label for="author">Автор</label>
+                    <input type="text" id="author" name="author" class="form-control" tabindex="1" maxlength="100" autocomplete="off" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Название</label>
+                    <input type="text" id="name" name="name" class="form-control" tabindex="2" maxlength="300" autocomplete="off" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="year">Год издания</label>
+                    <input id="year" name="year" class="form-control" tabindex="4" pattern="\d{4}" required autocomplete="off">
+                </div>
+
+                <div id="validationMessages" class="alert alert-danger col-md-12" role="alert" hidden>
+                    {% if error %}
+                        <p>Поле {{ error }} содержит ошибку</p>
+                    {% endif %}
+                </div>
+
+                <button type="submit" class="btn btn-primary col-md-12" tabindex="8">Создать</button>
+
+            </form>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+
+    $(document).ready(function() {
+
+        var passwordsMatch = true;
+
+        $('#password, #password2').keyup(function() {
+
+            var pwd = $('#password').val();
+            var pwd2 = $('#password2').val();
+
+            passwordsMatch = pwd === pwd2;
+
+            if (!passwordsMatch) {
+                $('#validationMessages').html('Пароли не совпадают');
+                $('#validationMessages').show();
+                $('button[type="submit"]').attr('disabled', true);
+            } else {
+                $('#validationMessages').hide();
+                $('button[type="submit"]').attr('disabled', false);
+            }
+
+        });
+
+    });
+
+</script>
+{% endblock %}

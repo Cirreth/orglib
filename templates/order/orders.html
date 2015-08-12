@@ -1,0 +1,104 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div class="container col-md-1">
+
+    <h4  style="margin-top: 20px;">Действия</h4>
+    <hr>
+
+    <div class="form-group">
+        <a type="text" class="btn btn-default" href="{{ url_for('main') }}">Личный кабинет</a>
+    </div>
+
+    <div class="form-group">
+        <a type="text" class="btn btn-default" href="#">Публичная библиотека</a>
+    </div>
+
+</div>
+
+<div class="container col-md-10 col-md-offset-1">
+
+    <h3>Ваши заказы</h3>
+
+     <div class="form-group">
+        <a type="text" class="btn btn-success" href=" {{ url_for('order_create') }}"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Создать заказ</a>
+    </div>
+
+    <div class="panel panel-default">
+
+            <div class="panel-body">
+                
+                <table class="table table-striped" id="books" >
+                    <caption>Ваши заказы</caption>
+                    <tr>
+                        <th width="20%">Фамилия и имя автора</th>
+                        <th width="40%">Название книги</th>
+                        <th width="10%">Год издания</th>
+                        <th width="10%">Дата создания</th>
+                        <th width="10%">Статус</th>
+                        <th width="10%">Комментарии</th>
+                    </tr>
+                    <tr>
+                        <td>Robert C. Martin</td>
+                        <td>Clean Code: A Handbook of Agile Software Craftsmanship</td>
+                        <td>2014</td>
+                        <td>11.06.2015</td>
+                        <td><span class="label label-danger">Не выполнен</span></td>
+                        <td align="center"><a href="#"><span class="badge">2</span></a></td>
+                    </tr>
+                    <tr>
+                        <td>Martin Fowler</td>
+                        <td>Refactoring: Improving the Design of Existing Code</td>
+                        <td>1992</td>
+                        <td>21.06.2015</td>
+                        <td><span class="label label-info">На рассмотрении</span></td>
+                        <td align="center"><a href="#"><span class="badge">3</span></a></td>
+                    </tr>
+                    <tr>
+                        <td>Erich Gamma</td>
+                        <td>Design Patterns: Elements of Reusable Object-Oriented Software</td>
+                        <td>2014</td>
+                        <td>01.07.2015</td>
+                        <td><span class="label label-success">Выполнено</span></td>
+                        <td align="center"></td>
+                    </tr>
+                </table>
+
+            </div>
+
+    </div>
+
+
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+<script>
+
+    $(document).ready(function() {
+
+        var hidden = undefined;
+
+        $('#books input').keyup(function() {
+
+            var filter = $(this).val();
+            var col = $(this).closest("th").index();
+
+            if (hidden !== undefined) hidden.show();
+
+            hidden = $(this).closest("table")
+            .find("tr td:nth-child(" + (col+1) + ")")
+            .filter(function(_, elm) { z =$(elm); return $(elm).html().toLowerCase().indexOf(filter.toLowerCase())==-1 && $(elm).is('td') })
+            .parent();
+
+            hidden.hide();
+
+        });
+
+    });
+
+</script>
+{% endblock %}
+
+
