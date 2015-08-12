@@ -10,7 +10,7 @@
                 <div class="col-md-11">
                     <h4>Создать новый заказ</h4>
                 </div>
-                <a class="btn btn-default col-md-1" href="{{ url_for('main') }}">
+                <a class="btn btn-default col-md-1" href="{{ url_for('orders') }}">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                 </a>
 
@@ -18,7 +18,7 @@
         </div>
 
         <div class="panel-body">
-            <form action="{{url_for('register')}}" method="POST" name="patient">
+            <form action="{{url_for('create_order')}}" method="POST" >
 
                 <div class="form-group">
                     <label for="author">Автор</label>
