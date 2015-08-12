@@ -8,3 +8,10 @@ from app import app
 @login_required
 def main():
     return render_template('main.html')
+
+
+@app.route("/public")
+@login_required
+def public():
+    return render_template('publiclib.html')
+

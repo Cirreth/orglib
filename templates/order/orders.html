@@ -3,15 +3,15 @@
 
 <div class="container col-md-1">
 
-    <h4  style="margin-top: 20px;">Действия</h4>
+    <h4  style="margin-top: 20px;">Навигация</h4>
     <hr>
 
     <div class="form-group">
         <a type="text" class="btn btn-default" href="{{ url_for('main') }}">Личный кабинет</a>
     </div>
 
-    <div class="form-group">
-        <a type="text" class="btn btn-default" href="#">Публичная библиотека</a>
+   <div class="form-group">
+        <a type="text" class="btn btn-default" href="{{ url_for('public') }}">Публичная библиотека</a>
     </div>
 
 </div>
