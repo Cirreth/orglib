@@ -1,5 +1,7 @@
 __all__ = [
-    "User"
+    "User",
+    "Book"
 ]
 
 from .User import User
+from .Book import Book

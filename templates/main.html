@@ -7,7 +7,7 @@
     <hr>
 
     <div class="form-group">
-        <button type="text" class="btn btn-success"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Добавить книгу</button>
+        <a type="text" class="btn btn-success" href=" {{ url_for('book_create') }}"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Добавить книгу</a>
     </div>
 
     <div class="form-group">
@@ -24,11 +24,11 @@
 
     <h3>Здравствуйте, {{ current_user.login }}!</h3>
 
-    <div class="panel panel-default">
+    <div class="panel panel-default" style="max-height: 350px; overflow-y: scroll;">
 
             <div class="panel-body">
                 
-                <table class="table table-striped" id="books">
+                <table class="table table-striped" id="books" >
                     <caption>Ваши книги</caption>
                     <tr>
                         <th width="30%">Фамилия и имя автора</th>

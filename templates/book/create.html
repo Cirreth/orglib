@@ -8,7 +8,7 @@
         <div class="panel-heading clearfix">
             <div class="form-group">
                 <div class="col-md-11">
-                    <h4>Регистрация</h4>
+                    <h4>Добавить новую книгу</h4>
                 </div>
                 <a class="btn btn-default col-md-1" href="{{ url_for('main') }}">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
@@ -21,23 +21,23 @@
             <form action="{{url_for('register')}}" method="POST" name="patient">
 
                 <div class="form-group">
-                    <label for="login">Логин</label>
-                    <input type="text" id="login" name="login" class="form-control" tabindex="1" maxlength="30" autocomplete="off" required>
+                    <label for="author">Автор</label>
+                    <input type="text" id="author" name="author" class="form-control" tabindex="1" maxlength="100" autocomplete="off" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="password">Пароль</label>
-                    <input type="password" id="password" name="password" class="form-control" tabindex="2" minlength="3" maxlength="30" autocomplete="off" required>
+                    <label for="name">Название</label>
+                    <input type="text" id="name" name="name" class="form-control" tabindex="2" maxlength="300" autocomplete="off" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="password2">Подтвердите пароль</label>
-                    <input type="password" id="password2" name="password2" class="form-control" tabindex="3" minlength="3" maxlength="30" autocomplete="off" required>
+                    <label for="year">Год издания</label>
+                    <input id="year" name="year" class="form-control" tabindex="4" pattern="\d{4}" required autocomplete="off">
                 </div>
 
                 <div class="form-group">
-                    <label for="email">E-Mail</label>
-                    <input id="email" name="email" class="form-control" tabindex="4" pattern=".*@.*" maxlength="60" required autocomplete="off">
+                    <label for="file">Файл</label>
+                    <input id="file" name="file" type="file" tabindex="5" pattern="\d{4}" required autocomplete="off">
                 </div>
 
                 <div id="validationMessages" class="alert alert-danger col-md-12" role="alert" hidden>
@@ -46,7 +46,7 @@
                     {% endif %}
                 </div>
 
-                <button type="submit" class="btn btn-primary col-md-12" tabindex="8">Зарегистрироваться</button>
+                <button type="submit" class="btn btn-primary col-md-12" tabindex="8">Добавить</button>
 
             </form>
         </div>
