@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div class="container">
+
+    <h3>Администрирование системы</h3>
+
+    <div class="panel panel-default">
+
+        <div class="panel-body">
+
+            <a href="#" class=" btn btn-default active">Пользователи</a>
+            <a href="#" class=" btn btn-default">Книги</a>
+            <a href="#" class=" btn btn-default">Заказы</a>
+
+        </div>
+
+    </div>
+
+    <div class="panel panel-default">
+
+        <div class="panel-body">
+
+            <table class="table table-striped" >
+                    <caption>Ваши заказы</caption>
+                    <tr>
+                        <th width="35%">Логин</th>
+                        <th width="35%">E-Mail</th>
+                        <th width="20%">Администратор</th>
+                        <th width="5%"></th>
+                        <th width="5%"></th>
+                    </tr>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{user.login}}</td>
+                        <td>{{user.email}}</td>
+                        <td>{% if user.is_admin %} Да {% else %} Нет {% endif %}</td>
+                        <td>
+                            <a class="btn btn-warning" href="{{url_for('user_doadmin', login=user.login)}}">
+                                <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn btn-danger" href="{{url_for('user_delete', login=user.login)}}">
+                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+

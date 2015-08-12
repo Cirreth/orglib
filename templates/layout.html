@@ -16,7 +16,15 @@
             </div>
             {% if current_user.is_authenticated() %}
             <div class="col-md-3 text-right">
-                <a class="btn btn-default" style="border: none;">Вы вошли как <b>{{ current_user.login }}</b></a>
+                <a class="btn btn-default"
+                    {% if current_user.is_admin %}
+                        href="{{ url_for('admin_users') }}"
+                    {% endif %}
+                    style="border: none;">Вы вошли как <b>{{ current_user.login }}</b>
+                {% if current_user.is_admin %}
+                    (адинистратор)
+                {% endif %}
+                </a>
             </div>
             <div class="col-md-1">
                 <a class="btn btn-primary" href=" {{ url_for('logout') }}">Выйти</a>
