@@ -24,7 +24,7 @@ class Order(db.Model):
     status = relationship('OrderStatus')
     book_id = db.Column(db.String(36), ForeignKey('book.id'), nullable=True)
     book = relationship('Book')
-    comments = relationship('Comment')
+    # comments = relationship('Comment')
 
     def __init__(self):
         self.id = str(uuid.uuid4())
@@ -40,7 +40,7 @@ class Order(db.Model):
             'author': self.author,
             'name': self.name,
             'year': self.year,
-            'create_date': self.create_date
+            'create_date': self.create_date.strftime('%d.%m.%Y %H:%M:%S')
         }
 
     @classmethod

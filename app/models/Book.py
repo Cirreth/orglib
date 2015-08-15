@@ -13,7 +13,7 @@ class Book(db.Model):
     author = db.Column('author', db.Integer, nullable=False)
     name = db.Column('name', db.String(300), nullable=False)
     year = db.Column('year', db.Integer, nullable=False)
-    file = db.Column('file', db.Boolean, nullable=False)
+    file = db.Column('file', db.String(200), nullable=False)
 
     def __init__(self):
         self.id = str(uuid.uuid4())

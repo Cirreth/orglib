@@ -27,8 +27,9 @@
     <div class="panel panel-default">
 
             <div class="panel-body">
-                
-                <table class="table table-striped" id="books" >
+
+
+                <table class="table table-striped" id="orders" >
                     <caption>Ваши заказы</caption>
                     <tr>
                         <th width="20%">Фамилия и имя автора</th>
@@ -38,44 +39,42 @@
                         <th width="10%">Статус</th>
                         <th width="10%">Комментарии</th>
                     </tr>
+
+                    {% for o in orders %}
                     <tr>
-                        <td>Robert C. Martin</td>
-                        <td>Clean Code: A Handbook of Agile Software Craftsmanship</td>
-                        <td>2014</td>
-                        <td>11.06.2015</td>
-                        <td><span class="label label-danger col-md-12">Не выполнен</span></td>
-                        <td align="center"><a href="#"><span class="badge">2</span></a></td>
+                        <td>{{ o.author }}</td>
+                        <td>{{ o.name }}</td>
+                        <td>{{ o.year }}</td>
+                        <td>{{ o.create_date.strftime('%d.%m.%Y') }}</td>
+                        <td>
+                            <span class="label
+                                {% if o.status.id == 0 %}
+                                    label-default
+                                {% elif o.status.id == 1 %}
+                                    label-info
+                                {% elif o.status.id == 2 %}
+                                    label-success
+                                {% elif o.status.id == 3 %}
+                                    label-danger
+                                {% endif %}
+                                 col-md-12">
+                                {{ o.status.status }}
+                            </span>
+                        </td>
+                        <td align="center">
+                            <a href="#">
+                                <span class="badge">
+                                    {{ o.comments.__len__ if o.comments else 0 }}
+                                    <span class="glyphicon glyphicon-exclamation-sign" style="color: orange;"></span>
+                                </span>
+                            </a></td>
                     </tr>
-                    <tr>
-                        <td>Martin Fowler</td>
-                        <td>Refactoring: Improving the Design of Existing Code</td>
-                        <td>1992</td>
-                        <td>21.06.2015</td>
-                        <td><span class="label label-info col-md-12">На рассмотрении</span></td>
-                        <td align="center"><a href="#"><span class="badge">3 <span class="glyphicon glyphicon-exclamation-sign" style="color: orange;"></span></span></a></td>
-                    </tr>
-                    <tr>
-                        <td>Martin Fowler</td>
-                        <td>Refactoring: Improving the Design of Existing Code</td>
-                        <td>1992</td>
-                        <td>21.06.2015</td>
-                        <td><span class="label label-default col-md-12">Создан</span></td>
-                        <td align="center"><a href="#"><span class="badge">3 <span class="glyphicon glyphicon-exclamation-sign" style="color: orange;"></span></span></a></td>
-                    </tr>
-                    <tr>
-                        <td>Erich Gamma</td>
-                        <td>Design Patterns: Elements of Reusable Object-Oriented Software</td>
-                        <td>2014</td>
-                        <td>01.07.2015</td>
-                        <td><span class="label label-success col-md-12">Выполнено</span></td>
-                        <td align="center"></td>
-                    </tr>
+                    {% endfor %}
                 </table>
 
             </div>
 
     </div>
-
 
 </div>
 {% endblock %}
