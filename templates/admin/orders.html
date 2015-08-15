@@ -1,0 +1,110 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div class="container">
+
+    <h3>Администрирование системы</h3>
+
+    <div class="panel panel-default">
+
+        <div class="panel-body">
+
+            <a href="{{ url_for('admin_users') }}" class="btn btn-default">Пользователи</a>
+            <a href="#" class=" btn btn-default">Книги</a>
+            <a href="{{ url_for('admin_orders') }}" class="btn btn-default active">Заказы</a>
+            <a href="{{ url_for('main') }}" class="btn btn-default pull-right">Личный кабинет</a>
+        </div>
+
+    </div>
+
+    <div class="panel panel-default">
+
+        <div class="panel-body">
+
+            <div class="panel panel-default">
+
+                <div class="panel-heading">
+                    Имя киниги будет здесь где-то
+                </div>
+
+                <div class="panel-body">
+
+                    <h3>Общие сведения</h3>
+
+                    <div class="row">
+                      <div class="col-md-2"><b>Пользователь</b></div>
+                      <div class="col-md-10">Иван Петрович</div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-2"><b>Дата создания</b></div>
+                      <div class="col-md-10">12.10.2015</div>
+                    </div>
+
+                    <h3>Книга</h3>
+
+                    <div class="row">
+                      <div class="col-md-2"><b>Название</b></div>
+                      <div class="col-md-10">Имя киниги будет здесь где-то</div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-2"><b>Автор</b></div>
+                      <div class="col-md-10">Автор книги здесь</div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-2"><b>Год издания</b></div>
+                      <div class="col-md-10">1874</div>
+                    </div>
+
+                    <h3>Ответы</h3>
+
+                    <div class="panel panel-default">
+
+                        <div class="panel-body">
+
+                            <div class="row">
+                                <div class="col-md-2"><b>Пользователь</b></div>
+                                <div class="col-md-10">Администратор (админстратор)</div>
+                            </div>
+
+                            <div class="row">
+                              <div class="col-md-2"><b>Текст ответа</b></div>
+                              <div class="col-md-10">Такой книги не существует в природе</div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="panel panel-default">
+
+                        <div class="panel-body">
+
+                            <div class="row">
+                              <div class="col-md-2"><b>Пользователь</b></div>
+                              <div class="col-md-10">Иван Петрович</div>
+                            </div>
+
+                            <div class="row">
+                              <div class="col-md-2"><b>Текст ответа</b></div>
+                              <div class="col-md-10">Но я лично у чувака в автобусе видел!</div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+

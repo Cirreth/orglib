@@ -9,9 +9,10 @@
 
         <div class="panel-body">
 
-            <a href="#" class=" btn btn-default active">Пользователи</a>
+            <a href="{{ url_for('admin_users') }}" class=" btn btn-default active">Пользователи</a>
             <a href="#" class=" btn btn-default">Книги</a>
-            <a href="#" class=" btn btn-default">Заказы</a>
+            <a href="{{ url_for('admin_orders') }}" class=" btn btn-default">Заказы</a>
+            <a href="{{ url_for('main') }}" class="btn btn-default pull-right">Личный кабинет</a>
 
         </div>
 
@@ -22,7 +23,7 @@
         <div class="panel-body">
 
             <table class="table table-striped" >
-                    <caption>Ваши заказы</caption>
+                    <caption>Пользователи</caption>
                     <tr>
                         <th width="35%">Логин</th>
                         <th width="35%">E-Mail</th>

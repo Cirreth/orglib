@@ -1,7 +1,11 @@
 __all__ = [
+    "Book",
     "User",
-    "Book"
+    "Order",
+    "OrderStatus"
 ]
 
-from .User import User
 from .Book import Book
+from .User import User
+from .Order import Order
+from .OrderStatus import OrderStatus

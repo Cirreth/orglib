@@ -6,13 +6,24 @@ from flask_login import UserMixin
 from webargs import Arg
 
 
-class User(db.Model, UserMixin):
+users_books = db.Table('users_book',
+    db.Column('user_login', db.Integer, db.ForeignKey('user.login')),
+    db.Column('book_id', db.Integer, db.ForeignKey('book.id'))
+)
 
+
+class User(db.Model, UserMixin):
     # Entity fields
     login = db.Column('login', db.String(30), primary_key=True, nullable=False)
     password = db.Column('password', db.String(30), nullable=False)
     email = db.Column('email', db.String(100), nullable=False)
     is_admin = db.Column('is_admin', db.Boolean, nullable=False)
+    books = db.relationship('Book',
+                            secondary=users_books,
+                            primaryjoin=(users_books.c.user_login == login),
+                            backref=db.backref('users_books', lazy='dynamic'),
+                            lazy='dynamic')
+    orders = db.relationship('Order')
 
     def __repr__(self):
         return json.dumps(self.dict_repr(), ensure_ascii=False)

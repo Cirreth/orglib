@@ -7,10 +7,6 @@
     <hr>
 
     <div class="form-group">
-        <a type="text" class="btn btn-success" href=" {{ url_for('book_create') }}"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Добавить книгу</a>
-    </div>
-
-    <div class="form-group">
         <a type="text" class="btn btn-default" href=" {{ url_for('orders') }}">Заказы</a>
     </div>
 
@@ -23,6 +19,10 @@
 <div class="container col-md-10 col-md-offset-1">
 
     <h3>Здравствуйте, {{ current_user.login }}!</h3>
+
+    <div class="form-group">
+        <a type="text" class="btn btn-success" href=" {{ url_for('book_create') }}"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Добавить книгу</a>
+    </div>
 
     <div class="panel panel-default" style="max-height: 350px; overflow-y: scroll;">
 

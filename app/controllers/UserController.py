@@ -3,7 +3,7 @@ from flask import render_template, request, url_for
 # app
 from app import app, User
 from flask_login import login_required, current_user
-from webargs.flaskparser import parser
+from webargs.flaskparser import parser, abort
 from werkzeug.utils import redirect
 
 
@@ -36,11 +36,11 @@ def users():
 @app.route("/user/delete/<login>", methods=['GET'])
 @login_required
 def user_delete(login):
-    if not current_user().is_admin:
-        abort(403)
+    if not current_user.is_admin:
+        abort(403)  # HTTP 403 - invalid credentials
     u = User.get(login)
     if not u:
-        abort(404)
+        abort(404)  # HTTP 404 - Not found
     u.delete()
     return redirect(url_for('admin_users'))
 
@@ -53,6 +53,6 @@ def user_doadmin(login):
     u = User.get(login)
     if not u:
         abort(404)
-    u.is_admin = True
+    u.is_admin = not u.is_admin
     u.save()
     return redirect(url_for('admin_users'))
