@@ -6,6 +6,10 @@
     <h4  style="margin-top: 20px;">Навигация</h4>
     <hr>
 
+     <div class="form-group">
+        <a type="text" class="btn btn-default" href=" {{ url_for('orders') }}">Заказы</a>
+    </div>
+
     <div class="form-group">
         <a type="text" class="btn btn-default" href="{{ url_for('main') }}">Личный кабинет</a>
     </div>
@@ -65,41 +69,37 @@
 
                     <h3>Ответы</h3>
 
-                    <div class="panel panel-success">
+                    {% for c in o.comments %}
+                    <div class="panel
+                    {% if c.user.is_admin %}
+                    panel-primary
+                    {% else %}
+                    panel-success
+                    {% endif %}
+                    ">
 
                         <div class="panel-body">
 
                             <div class="row">
+                              <div class="col-md-2"><b>Добавлен</b></div>
+                              <div class="col-md-10">{{ c.create_date.strftime('%d.%m.%Y %H:%M:%S') }}</div>
+                            </div>
+
+                            <div class="row">
                               <div class="col-md-2"><b>Пользователь</b></div>
-                              <div class="col-md-10">Иван Петрович</div>
+                              <div class="col-md-10">{{ c.user_login }}</div>
                             </div>
 
                             <div class="row">
                               <div class="col-md-2"><b>Текст ответа</b></div>
-                              <div class="col-md-10">Но я лично у чувака в автобусе видел!</div>
+                              <div class="col-md-10">{{ c.text }}</div>
                             </div>
 
                         </div>
 
                     </div>
+                    {% endfor %}
 
-                    <div class="panel panel-primary">
-
-                        <div class="panel-body">
-
-                            <div class="row">
-                              <div class="col-md-2"><b>Пользователь</b></div>
-                              <div class="col-md-10">Вася (администратор)</div>
-                            </div>
-
-                            <div class="row">
-                              <div class="col-md-2"><b>Текст ответа</b></div>
-                              <div class="col-md-10">Но я лично у чувака в автобусе видел!</div>
-                            </div>
-
-                        </div>
-
-                    </div>
 
                     <form method="POST" action="{{ url_for('comment_add', order_id=o.id) }}">
                         <div class="panel panel-success">
@@ -117,7 +117,7 @@
 
                                 <div class="row" style="margin-top:10px;">
                                     <div class="col-md-10 col-md-offset-2">
-                                        <input type="text" class="btn btn-primary" value="Добавить">
+                                        <input type="submit" class="btn btn-primary" value="Добавить">
                                     </div>
                                 </div>
 

@@ -19,4 +19,7 @@ def comment_add(order_id):
     c.text = text
     c.order_id = order_id
     c.user_login = current_user.login
-    return redirect(url_for('main'))
+    c.save()
+    if current_user.is_admin:
+        return redirect(url_for('admin_order', order_id=order_id))
+    return redirect(url_for('order', order_id=order_id))

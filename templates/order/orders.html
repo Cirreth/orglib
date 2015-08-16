@@ -47,7 +47,7 @@
                     </tr>
 
                     {% for o in orders %}
-                    <tr {% if o.status.id == 3 %} resolved {% endif %}>
+                    <tr {% if o.status.id > 1 %} resolved {% endif %}>
                         <td>{{ o.author }}</td>
                         <td>{{ o.name }}</td>
                         <td>{{ o.year }}</td>
@@ -70,8 +70,10 @@
                         <td align="center">
                             <a href="{{ url_for('order', order_id=o.id) }}">
                                 <span class="badge">
-                                    {{ o.comments.__len__ if o.comments else 0 }}
+                                    {{ o.comments.__len__() if o.comments else 0 }}
+                                    {% if any_comments(o) %}
                                     <span class="glyphicon glyphicon-exclamation-sign" style="color: orange;"></span>
+                                    {% endif %}
                                 </span>
                             </a></td>
                     </tr>

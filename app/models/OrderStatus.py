@@ -18,3 +18,7 @@ class OrderStatus(db.Model):
             'id': self.id,
             'status': self.status,
         }
+
+    @classmethod
+    def get(cls, id):
+        return cls.query.get(id)

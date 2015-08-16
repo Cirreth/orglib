@@ -7,12 +7,16 @@ from webargs.flaskparser import parser, abort
 from werkzeug.utils import redirect
 
 
+def any_comments(o):
+    return any([c.unread for c in o.comments])
+
+
 @app.route("/orders", methods=['GET', 'POST'])
 @login_required
 def orders():
     if request.method == 'GET':
         ods = current_user.orders
-        return render_template('order/orders.html', orders=ods)
+        return render_template('order/orders.html', orders=ods, any_comments=any_comments)
 
 
 @app.route("/orders/create", methods=['GET', 'POST'])
@@ -39,4 +43,8 @@ def order_create():
 @login_required
 def order(order_id):
     o = Order.get(order_id)
+    # mark all comments as read
+    for c in o.comments:
+        c.unread = False
+        c.save()
     return render_template('order/order.html', o=o)

@@ -35,7 +35,7 @@
 
                     <div class="row">
                       <div class="col-md-2"><b>Пользователь</b></div>
-                      <div class="col-md-10">{{ o.user.name }}</div>
+                      <div class="col-md-10">{{ o.user_login }}</div>
                     </div>
 
                     <div class="row">
@@ -64,41 +64,36 @@
 
                     <h3>Ответы</h3>
 
-                    <div class="panel panel-success">
+                    {% for c in o.comments %}
+                    <div class="panel
+                    {% if c.user.is_admin %}
+                    panel-primary
+                    {% else %}
+                    panel-success
+                    {% endif %}
+                    ">
 
                         <div class="panel-body">
 
                             <div class="row">
+                              <div class="col-md-2"><b>Добавлен</b></div>
+                              <div class="col-md-10">{{ c.create_date.strftime('%d.%m.%Y %H:%M:%S') }}</div>
+                            </div>
+
+                            <div class="row">
                               <div class="col-md-2"><b>Пользователь</b></div>
-                              <div class="col-md-10">Иван Петрович</div>
+                              <div class="col-md-10">{{ c.user_login }}</div>
                             </div>
 
                             <div class="row">
                               <div class="col-md-2"><b>Текст ответа</b></div>
-                              <div class="col-md-10">Но я лично у чувака в автобусе видел!</div>
+                              <div class="col-md-10">{{ c.text }}</div>
                             </div>
 
                         </div>
 
                     </div>
-
-                    <div class="panel panel-primary">
-
-                        <div class="panel-body">
-
-                            <div class="row">
-                              <div class="col-md-2"><b>Пользователь</b></div>
-                              <div class="col-md-10">Вася (администратор)</div>
-                            </div>
-
-                            <div class="row">
-                              <div class="col-md-2"><b>Текст ответа</b></div>
-                              <div class="col-md-10">Но я лично у чувака в автобусе видел!</div>
-                            </div>
-
-                        </div>
-
-                    </div>
+                    {% endfor %}
 
                     <form method="POST" action="{{ url_for('comment_add', order_id=o.id) }}">
                         <div class="panel panel-success">
@@ -116,7 +111,7 @@
 
                                 <div class="row" style="margin-top:10px;">
                                     <div class="col-md-10 col-md-offset-2">
-                                        <input type="text" class="btn btn-primary" value="Добавить">
+                                        <input type="submit" class="btn btn-primary" value="Добавить">
                                     </div>
                                 </div>
 
@@ -137,23 +132,31 @@
                                 <div class="col-md-10">
 
                                     <label class="radio-inline">
-                                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="0">
-                                        <span class="label label-default">Создан</span>
+                                        <a href="{{ url_for('admin_order_set_status', order_id=o.id, new_status_code=0) }}" style="text-decoration: none;">
+                                            <input type="radio" name="optionsRadios" id="optionsRadios0" value="0">
+                                            <span class="label label-default">Создан</span>
+                                        </a>
                                     </label>
 
                                     <label class="radio-inline">
-                                        <input type="radio" name="optionsRadios" id="optionsRadios2" value="1">
-                                        <span class="label label-info">На рассмотрении</span>
+                                        <a href="{{ url_for('admin_order_set_status', order_id=o.id, new_status_code=1) }}" style="text-decoration: none;">
+                                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="1">
+                                            <span class="label label-info">На рассмотрении</span>
+                                        </a>
                                     </label>
 
                                     <label class="radio-inline">
-                                        <input type="radio" name="optionsRadios" id="optionsRadios3" value="2">
-                                        <span class="label label-success">Выполнен</span>
+                                        <a href="{{ url_for('admin_order_set_status', order_id=o.id, new_status_code=2) }}" style="text-decoration: none;">
+                                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="2">
+                                            <span class="label label-success">Выполнен</span>
+                                        </a>
                                     </label>
 
                                     <label class="radio-inline">
-                                        <input type="radio" name="optionsRadios" id="optionsRadios4" value="3">
-                                        <span class="label label-danger">Отклонен</span>
+                                        <a href="{{ url_for('admin_order_set_status', order_id=o.id, new_status_code=3) }}" style="text-decoration: none;">
+                                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="3">
+                                            <span class="label label-danger">Отклонен</span>
+                                        </a>
                                     </label>
 
                                 </div>
@@ -182,7 +185,7 @@
 
     $(document).ready(function() {
 
-        $('#optionsRadios1').attr('checked', 'checked');
+        $('#optionsRadios{{ o.status.id }}').attr('checked', 'checked');
 
     });
 
