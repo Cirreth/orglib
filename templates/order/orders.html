@@ -28,6 +28,8 @@
 
             <div class="panel-body">
 
+                <a type="text" class="btn btn-sm btn-default" id="display-open">Отобразить открытые</a>
+                <a type="text" class="btn btn-sm btn-default active" id="display-all">Отобразить все</a>
 
                 <table class="table table-striped" id="orders" >
                     <caption>Ваши заказы</caption>
@@ -37,11 +39,11 @@
                         <th width="10%">Год издания</th>
                         <th width="10%">Дата создания</th>
                         <th width="10%">Статус</th>
-                        <th width="10%">Комментарии</th>
+                        <th width="10%">Ответы</th>
                     </tr>
 
                     {% for o in orders %}
-                    <tr>
+                    <tr {% if o.status.id == 3 %} resolved {% endif %}>
                         <td>{{ o.author }}</td>
                         <td>{{ o.name }}</td>
                         <td>{{ o.year }}</td>
@@ -85,22 +87,16 @@
 
     $(document).ready(function() {
 
-        var hidden = undefined;
+        $('#display-all').click(function() {
+            $('table tr[resolved]').show();
+            $(this).addClass('active');
+            $('#display-all').removeClass('active');
+        });
 
-        $('#books input').keyup(function() {
-
-            var filter = $(this).val();
-            var col = $(this).closest("th").index();
-
-            if (hidden !== undefined) hidden.show();
-
-            hidden = $(this).closest("table")
-            .find("tr td:nth-child(" + (col+1) + ")")
-            .filter(function(_, elm) { z =$(elm); return $(elm).html().toLowerCase().indexOf(filter.toLowerCase())==-1 && $(elm).is('td') })
-            .parent();
-
-            hidden.hide();
-
+        $('#display-open').click(function() {
+            $('table tr[resolved]').hide();
+            $(this).addClass('active');
+            $('#display-all').removeClass('active');
         });
 
     });

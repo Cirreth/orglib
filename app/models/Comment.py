@@ -7,7 +7,7 @@ from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
 
 
-class OrderStatus(db.Model):
+class Comment(db.Model):
     __table_args__ = {'sqlite_autoincrement': True}
 
     # Entity fields
