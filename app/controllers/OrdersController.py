@@ -3,7 +3,7 @@ from flask import render_template, request, url_for
 # app
 from app import app, Order
 from flask_login import current_user, login_required
-from webargs.flaskparser import parser
+from webargs.flaskparser import parser, abort
 from werkzeug.utils import redirect
 
 
@@ -33,3 +33,10 @@ def order_create():
     o.user_login = current_user.login
     o.save()
     return redirect(url_for('orders'))
+
+
+@app.route("/order/<order_id>", methods=['GET'])
+@login_required
+def order(order_id):
+    o = Order.get(order_id)
+    return render_template('order/order.html', o=o)

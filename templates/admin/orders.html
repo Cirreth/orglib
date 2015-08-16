@@ -21,10 +21,13 @@
 
         <div class="panel-body">
 
+
+            {% for o in orders %}
             <div class="panel panel-default">
 
                 <div class="panel-heading">
-                    Имя киниги будет здесь где-то
+                    {{ o.name }}
+                    <a href="{{ url_for('admin_order', order_id=o.id) }}" class="btn btn-xs btn-warning pull-right">Открыть</a>
                 </div>
 
                 <div class="panel-body">
@@ -33,72 +36,60 @@
 
                     <div class="row">
                       <div class="col-md-2"><b>Пользователь</b></div>
-                      <div class="col-md-10">Иван Петрович</div>
+                      <div class="col-md-10">{{ o.user_login }}</div>
                     </div>
 
                     <div class="row">
                       <div class="col-md-2"><b>Дата создания</b></div>
-                      <div class="col-md-10">12.10.2015</div>
+                      <div class="col-md-10"> {{ o.create_date.strftime('%d.%m.%Y') }} </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-2"><b>Статус</b></div>
+                        <span class="label
+                                {% if o.status.id == 0 %}
+                                    label-default
+                                {% elif o.status.id == 1 %}
+                                    label-info
+                                {% elif o.status.id == 2 %}
+                                    label-success
+                                {% elif o.status.id == 3 %}
+                                    label-danger
+                                {% endif %}
+                                 col-md-1">
+                                {{ o.status.status }}
+                            </span>
                     </div>
 
                     <h3>Книга</h3>
 
                     <div class="row">
                       <div class="col-md-2"><b>Название</b></div>
-                      <div class="col-md-10">Имя киниги будет здесь где-то</div>
+                      <div class="col-md-10">{{ o.name }}</div>
                     </div>
 
                     <div class="row">
                       <div class="col-md-2"><b>Автор</b></div>
-                      <div class="col-md-10">Автор книги здесь</div>
+                      <div class="col-md-10">{{ o.author }}</div>
                     </div>
 
+                    {% if o.year %}
                     <div class="row">
                       <div class="col-md-2"><b>Год издания</b></div>
-                      <div class="col-md-10">1874</div>
+                      <div class="col-md-10">{{ o.year }}</div>
                     </div>
+                    {% endif %}
 
-                    <h3>Ответы</h3>
-
-                    <div class="panel panel-default">
-
-                        <div class="panel-body">
-
-                            <div class="row">
-                                <div class="col-md-2"><b>Пользователь</b></div>
-                                <div class="col-md-10">Администратор (админстратор)</div>
-                            </div>
-
-                            <div class="row">
-                              <div class="col-md-2"><b>Текст ответа</b></div>
-                              <div class="col-md-10">Такой книги не существует в природе</div>
-                            </div>
+                    <div class="row" style="margin-top: 10px;">
+                        <div class="col-md-2">
 
                         </div>
-
-                    </div>
-
-                    <div class="panel panel-default">
-
-                        <div class="panel-body">
-
-                            <div class="row">
-                              <div class="col-md-2"><b>Пользователь</b></div>
-                              <div class="col-md-10">Иван Петрович</div>
-                            </div>
-
-                            <div class="row">
-                              <div class="col-md-2"><b>Текст ответа</b></div>
-                              <div class="col-md-10">Но я лично у чувака в автобусе видел!</div>
-                            </div>
-
-                        </div>
-
                     </div>
 
                 </div>
 
             </div>
+            {% endfor %}
 
         </div>
 
@@ -108,3 +99,16 @@
 
 {% endblock %}
 
+{% block scripts %}
+
+<script>
+
+    $(document).ready(function() {
+
+        $('#optionsRadios1').attr('checked', 'checked');
+
+    });
+
+</script>
+
+{% endblock %}

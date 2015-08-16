@@ -4,7 +4,8 @@ __all__ = [
     "UserController",
     "BookController",
     "OrdersController",
-    "AdminController"
+    "AdminController",
+    "CommentController"
 ]
 
 from . import MainController
@@ -13,3 +14,4 @@ from . import UserController
 from . import BookController
 from . import OrdersController
 from . import AdminController
+from . import CommentController

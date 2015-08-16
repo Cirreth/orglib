@@ -1,0 +1,191 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div class="container">
+
+    <h3>Администрирование системы</h3>
+
+    <div class="panel panel-default">
+
+        <div class="panel-body">
+
+            <a href="{{ url_for('admin_users') }}" class="btn btn-default">Пользователи</a>
+            <a href="#" class=" btn btn-default">Книги</a>
+            <a href="{{ url_for('admin_orders') }}" class="btn btn-default">Заказы</a>
+            <a href="{{ url_for('admin_orders') }}" class="btn btn-default active">Заказ: {{ o.author }} - {{ o.name }}</a>
+            <a href="{{ url_for('main') }}" class="btn btn-default pull-right">Личный кабинет</a>
+        </div>
+
+    </div>
+
+    <div class="panel panel-default">
+
+        <div class="panel-body">
+
+
+            <div class="panel panel-default">
+
+                <div class="panel-heading">
+                  {{ o.name }}
+                </div>
+
+                <div class="panel-body">
+
+                    <h3>Общие сведения</h3>
+
+                    <div class="row">
+                      <div class="col-md-2"><b>Пользователь</b></div>
+                      <div class="col-md-10">{{ o.user.name }}</div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-2"><b>Дата создания</b></div>
+                      <div class="col-md-10"> {{ o.create_date.strftime('%d.%m.%Y') }} </div>
+                    </div>
+
+                    <h3>Книга</h3>
+
+                    <div class="row">
+                      <div class="col-md-2"><b>Название</b></div>
+                      <div class="col-md-10">{{ o.name }}</div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-2"><b>Автор</b></div>
+                      <div class="col-md-10">{{ o.author }}</div>
+                    </div>
+
+                    {% if o.year %}
+                    <div class="row">
+                      <div class="col-md-2"><b>Год издания</b></div>
+                      <div class="col-md-10">{{ o.year }}</div>
+                    </div>
+                    {% endif %}
+
+                    <h3>Ответы</h3>
+
+                    <div class="panel panel-success">
+
+                        <div class="panel-body">
+
+                            <div class="row">
+                              <div class="col-md-2"><b>Пользователь</b></div>
+                              <div class="col-md-10">Иван Петрович</div>
+                            </div>
+
+                            <div class="row">
+                              <div class="col-md-2"><b>Текст ответа</b></div>
+                              <div class="col-md-10">Но я лично у чувака в автобусе видел!</div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="panel panel-primary">
+
+                        <div class="panel-body">
+
+                            <div class="row">
+                              <div class="col-md-2"><b>Пользователь</b></div>
+                              <div class="col-md-10">Вася (администратор)</div>
+                            </div>
+
+                            <div class="row">
+                              <div class="col-md-2"><b>Текст ответа</b></div>
+                              <div class="col-md-10">Но я лично у чувака в автобусе видел!</div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <form method="POST" action="{{ url_for('comment_add', order_id=o.id) }}">
+                        <div class="panel panel-success">
+
+                            <div class="panel-heading"></div>
+
+                            <div class="panel-body">
+
+                                <div class="row">
+                                    <div class="col-md-2">Текст ответа</div>
+                                    <div class="col-md-10">
+                                        <textarea name="text" class="field form-control" rows="3"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin-top:10px;">
+                                    <div class="col-md-10 col-md-offset-2">
+                                        <input type="text" class="btn btn-primary" value="Добавить">
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </form>
+
+                    {% if current_user.is_admin %}
+                    <div class="panel panel-success">
+
+                        <div class="panel-heading"></div>
+
+                        <div class="panel-body">
+
+                            <div class="row" style="margin-top: 10px;">
+                                <div class="col-md-2">Изменить статус</div>
+                                <div class="col-md-10">
+
+                                    <label class="radio-inline">
+                                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="0">
+                                        <span class="label label-default">Создан</span>
+                                    </label>
+
+                                    <label class="radio-inline">
+                                        <input type="radio" name="optionsRadios" id="optionsRadios2" value="1">
+                                        <span class="label label-info">На рассмотрении</span>
+                                    </label>
+
+                                    <label class="radio-inline">
+                                        <input type="radio" name="optionsRadios" id="optionsRadios3" value="2">
+                                        <span class="label label-success">Выполнен</span>
+                                    </label>
+
+                                    <label class="radio-inline">
+                                        <input type="radio" name="optionsRadios" id="optionsRadios4" value="3">
+                                        <span class="label label-danger">Отклонен</span>
+                                    </label>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+
+    $(document).ready(function() {
+
+        $('#optionsRadios1').attr('checked', 'checked');
+
+    });
+
+</script>
+
+{% endblock %}

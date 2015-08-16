@@ -7,6 +7,10 @@
     <hr>
 
     <div class="form-group">
+        <a type="text" class="btn btn-default active" href=" {{ url_for('orders') }}">Заказы</a>
+    </div>
+
+    <div class="form-group">
         <a type="text" class="btn btn-default" href="{{ url_for('main') }}">Личный кабинет</a>
     </div>
 
@@ -64,7 +68,7 @@
                             </span>
                         </td>
                         <td align="center">
-                            <a href="#">
+                            <a href="{{ url_for('order', order_id=o.id) }}">
                                 <span class="badge">
                                     {{ o.comments.__len__ if o.comments else 0 }}
                                     <span class="glyphicon glyphicon-exclamation-sign" style="color: orange;"></span>
@@ -90,7 +94,7 @@
         $('#display-all').click(function() {
             $('table tr[resolved]').show();
             $(this).addClass('active');
-            $('#display-all').removeClass('active');
+            $('#display-open').removeClass('active');
         });
 
         $('#display-open').click(function() {
