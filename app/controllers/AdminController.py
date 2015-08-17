@@ -44,3 +44,10 @@ def admin_order_set_status(order_id, new_status_code):
     o.status_id = new_status_code
     o.save()
     return redirect(url_for('admin_order', order_id=order_id))
+
+
+@app.route("/admin/public")
+@login_required
+def admin_public():
+    return render_template('/admin/publiclib.html')
+

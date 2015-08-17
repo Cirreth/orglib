@@ -15,5 +15,6 @@ def main():
 @app.route("/public")
 @login_required
 def public():
-    return render_template('publiclib.html')
+    books = Book.get_all()
+    return render_template('publiclib.html', books=books)
 
