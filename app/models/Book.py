@@ -16,6 +16,7 @@ class Book(db.Model):
     name = db.Column('name', db.String(300), nullable=False)
     year = db.Column('year', db.Integer, nullable=False)
     file = db.Column('file', db.String(200), nullable=False)
+    is_public = db.Column('is_public', db.Boolean, nullable=False)
     create_date = db.Column('create_date', db.DateTime, nullable=False)
     added_by_login = db.Column(db.String(30), ForeignKey('user.login'), nullable=False)
     added_by = db.relationship('User')
@@ -23,6 +24,7 @@ class Book(db.Model):
     def __init__(self):
         self.id = str(uuid.uuid4())
         self.create_date = datetime.datetime.now()
+        self.is_public = False
 
     def __repr__(self):
         return json.dumps(self.dict_repr(), ensure_ascii=False)
@@ -52,6 +54,10 @@ class Book(db.Model):
     @classmethod
     def get_all(cls):
         return cls.query.all()
+
+    @classmethod
+    def get_public(cls):
+        return cls.query.filter(cls.is_public is True).all()
 
     @classmethod
     def get_by_login(cls, login):

@@ -1,7 +1,7 @@
 from flask import render_template, url_for
 from flask_login import login_required, current_user
 # app
-from app import app, User, Order, OrderStatus
+from app import app, User, Order, OrderStatus, Book
 from webargs.flaskparser import abort
 from werkzeug.utils import redirect
 
@@ -49,5 +49,6 @@ def admin_order_set_status(order_id, new_status_code):
 @app.route("/admin/public")
 @login_required
 def admin_public():
-    return render_template('/admin/publiclib.html')
+    books = Book.get_public()
+    return render_template('/admin/publiclib.html', books=books)
 
