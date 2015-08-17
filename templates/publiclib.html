@@ -75,7 +75,7 @@
                     <tr>
                         <td>{{ book.author }}</td>
                         <td>{{ book.name }}</td>
-                        <td></td>
+                        <td>{{ book.year }}</td>
                         <td align="center"><a download href="static/books/{{ book.file }}" class="btn btn-default"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a></td>
                         <td align="center">
                             <a href="{{ url_for('book_share', book_id=book.id) }}" class="btn btn-{% if book.is_public %}primary{% else %}default{% endif %}">
