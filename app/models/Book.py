@@ -44,7 +44,6 @@ class Book(db.Model):
             'author': Arg(str, required=True, validate=lambda p: len(p) > 0),
             'name': Arg(str, required=True, validate=lambda p: len(p) > 0),
             'year': Arg(str, required=True, validate=lambda p: re.match(r'^\d{4}$', p) is not None),
-            'file': Arg(str, required=True, validate=lambda p: re.match(r'^[a-zA-Z0-9-]+\.[a-zA-Z0-9]{1,4}$', p) is not None)
         }
 
     @classmethod
@@ -65,7 +64,7 @@ class Book(db.Model):
 
     @classmethod
     def get_last(cls, count):
-        return cls.query.order_by(desc(cls.create_date)).limit(count).all()
+        return cls.query.filter(cls.is_public is True).order_by(desc(cls.create_date)).limit(count).all()
 
     # @classmethod
     # def get_filtered(cls, filter_str, page=0, page_size=10):

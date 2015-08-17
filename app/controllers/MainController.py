@@ -17,4 +17,3 @@ def main():
 def public():
     books = Book.get_public()
     return render_template('publiclib.html', books=books)
-

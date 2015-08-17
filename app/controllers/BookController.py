@@ -1,10 +1,10 @@
-import re
+import os
 from flask import render_template, request, url_for
 # app
 from app import app, Book
 from flask_login import login_required, current_user
 from webargs.flaskparser import parser, abort
-from werkzeug.utils import redirect
+from werkzeug.utils import redirect, secure_filename
 
 
 @app.route("/books/create", methods=['GET', 'POST'])
@@ -21,7 +21,12 @@ def book_create():
     book.author = args['author']
     book.name = args['name']
     book.year = args['year']
-    book.file = args['file']
+    # file
+    file = request.files['file']
+    extension = file.filename.split('.')[-1] or ""
+    book.file = book.id+'.'+extension
+    file.save(os.path.join(app.config['UPLOAD_FOLDER'], book.file))
+    #
     book.added_by_login = current_user.login
     book.save()
     return redirect(url_for('main'))
