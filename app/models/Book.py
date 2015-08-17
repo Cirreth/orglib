@@ -1,4 +1,5 @@
 # coding: utf-8
+import datetime
 import json
 import re
 import uuid
@@ -14,9 +15,11 @@ class Book(db.Model):
     name = db.Column('name', db.String(300), nullable=False)
     year = db.Column('year', db.Integer, nullable=False)
     file = db.Column('file', db.String(200), nullable=False)
+    create_date = db.Column('create_date', db.DateTime, nullable=False)
 
     def __init__(self):
         self.id = str(uuid.uuid4())
+        self.create_date = datetime.datetime.now()
 
     def __repr__(self):
         return json.dumps(self.dict_repr(), ensure_ascii=False)
@@ -46,6 +49,10 @@ class Book(db.Model):
     @classmethod
     def get_all(cls):
         return cls.query.all()
+
+    @classmethod
+    def get_last_five(cls):
+        return
 
     # @classmethod
     # def get_filtered(cls, filter_str, page=0, page_size=10):
