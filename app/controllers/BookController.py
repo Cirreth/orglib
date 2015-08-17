@@ -2,7 +2,7 @@ import re
 from flask import render_template, request, url_for
 # app
 from app import app, Book
-from flask_login import login_required
+from flask_login import login_required, current_user
 from webargs.flaskparser import parser
 from werkzeug.utils import redirect
 
@@ -22,5 +22,6 @@ def book_create():
     book.name = args['name']
     book.year = args['year']
     book.file = args['file']
+    book.added_by_login = current_user.login
     book.save()
     return redirect(url_for('main'))

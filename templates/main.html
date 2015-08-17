@@ -71,14 +71,18 @@
                         <td></td>
                         <td></td>
                     </tr>
+                    {% if not user_books %}
+                    <tr><td>У вас пока нет книг</td></tr>
+                    {% endif %}
+                    {% for book in user_books %}
                     <tr>
-                        <td>Eddings, David</td>
-                        <td>The Elenium 1 - The Diamond Throne</td>
+                        <td>{{ book.author }}</td>
+                        <td>{{ book.name }}</td>
                         <td></td>
-                        <td align="center"><a download href="static/books/Eddings, David - The Elenium 1 - The Diamond Throne.txt" class="btn btn-default"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a></td>
+                        <td align="center"><a download href="static/books/{{ book.file }}" class="btn btn-default"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a></td>
                         <td align="center"><a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span></a></td>
                     </tr>
-
+                    {% endfor %}
                 </table>
 
             </div>
@@ -92,11 +96,9 @@
             <div class="panel-heading">Лента новостей</div>
             <div class="panel-body">
 
-                <p class="bg-warning">Пользователь ... поделился ....</p>
-                <p class="bg-warning">Пользователь ... поделился ....</p>
-                <p class="bg-warning">Пользователь ... поделился ....</p>
-                <p class="bg-warning">Пользователь ... поделился ....</p>
-
+                {% for book in last_added_books %}
+                <p class="bg-warning">Пользователь {{ book.added_by_login }} добавил книгу {{ book.author }} - {{ book.name }}</p>
+                {% endfor %}
             </div>
 
         </div>
