@@ -1,0 +1,119 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div class="container">
+
+    <h3>Администрирование системы</h3>
+
+    <div class="panel panel-default">
+
+        <div class="panel-body">
+
+            <a href="{{ url_for('admin_users') }}" class="btn btn-default">Пользователи</a>
+            <a href="{{ url_for('admin_public') }}" class=" btn btn-default active">Книги</a>
+            <a href="{{ url_for('admin_orders') }}" class="btn btn-default ">Заказы</a>
+            <a href="{{ url_for('main') }}" class="btn btn-default pull-right">Личный кабинет</a>
+        </div>
+
+    </div>
+
+    <h3>Публичная библиотека</h3>
+
+    <div class="panel panel-default" style="max-height: 550px; overflow-y: scroll;">
+
+            <div class="panel-body">
+
+                <table class="table table-striped" id="books" >
+                    <caption>Книги</caption>
+                    <tr>
+                        <th width="30%">Фамилия и имя автора</th>
+                        <th width="30%">Название книги</th>
+                        <th width="10%">Год издания</th>
+                        <th width="10%">Загрузить</th>
+                        <th width="10%">Удалить</th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div class="form-group form-group-sm">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="filterAuthorName" placeholder="Автор">
+                                    <div class="input-group-addon btn">
+                                        <span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="form-group form-group-sm">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="filterBookName" placeholder="Книга">
+                                    <div class="input-group-addon btn">
+                                        <span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="form-group form-group-sm">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="filterYear" placeholder="Год">
+                                    <div class="input-group-addon btn">
+                                        <span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+                        <td></td>
+                        <td></td>
+                    </tr>
+
+                   {% for book in books %}
+                    <tr>
+                        <td>{{ book.author }}</td>
+                        <td>{{ book.name }}</td>
+                        <td>{{ book.year }}</td>
+                        <td align="center"><a download href="static/books/{{ book.file }}" class="btn btn-default"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a></td>
+                        <td align="center"><a href="{{ url_for('book_delete', book_id=book.id) }}" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
+                    </tr>
+                    {% endfor %}
+
+                </table>
+
+            </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+<script>
+
+    $(document).ready(function() {
+
+        var hidden = undefined;
+
+        $('#books input').keyup(function() {
+
+            var filter = $(this).val();
+            var col = $(this).closest("th").index();
+
+            if (hidden !== undefined) hidden.show();
+
+            hidden = $(this).closest("table")
+            .find("tr td:nth-child(" + (col+1) + ")")
+            .filter(function(_, elm) { z =$(elm); return $(elm).html().toLowerCase().indexOf(filter.toLowerCase())==-1 && $(elm).is('td') })
+            .parent();
+
+            hidden.hide();
+
+        });
+
+    });
+
+</script>
+{% endblock %}
+
+

@@ -8,10 +8,9 @@ from sqlalchemy.orm import relationship
 
 
 class Comment(db.Model):
-    __table_args__ = {'sqlite_autoincrement': True}
 
     # Entity fields
-    id = db.Column('id', db.Integer, primary_key=True, nullable=False)
+    id = db.Column('id', db.String(36), primary_key=True, nullable=False)
     text = db.Column('text', db.String(500), nullable=False)
     unread = db.Column('unread', db.Boolean, nullable=False)
     create_date = db.Column('create_date', db.DateTime, nullable=False)
@@ -20,6 +19,7 @@ class Comment(db.Model):
     order_id = db.Column(db.String(36), ForeignKey('order.id'), nullable=False)
 
     def __init__(self):
+        self.id = str(uuid.uuid4())
         self.unread = True
         self.create_date = datetime.datetime.now()
 
