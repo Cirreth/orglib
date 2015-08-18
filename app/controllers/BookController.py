@@ -50,8 +50,36 @@ def book_share(book_id):
     b = Book.get(book_id)
     if not b:
         abort(404)
-    if not b.added_by_login != current_user.login:
+    if b.added_by_login != current_user.login:
         abort(403)
     b.is_public = not b.is_public
     b.save()
+    return redirect(url_for('main'))
+
+
+@app.route("/book/<book_id>/get", methods=['GET'])
+@login_required
+def book_get(book_id):
+    b = Book.get(book_id)
+    if not b:
+        abort(404)
+    if not b.is_public:
+        abort(403)
+    if not current_user.has_book(b):
+        current_user.books.append(b)
+        current_user.save()
     return redirect(url_for('public'))
+
+
+@app.route("/book/<book_id>/remove", methods=['GET'])
+@login_required
+def book_remove(book_id):
+    b = Book.get(book_id)
+    if not b:
+        abort(404)
+    if not b.is_public:
+        abort(403)
+    if current_user.has_book(b):
+        current_user.books.remove(b)
+        current_user.save()
+    return redirect(url_for('main'))

@@ -68,6 +68,9 @@ class User(db.Model, UserMixin):
     # def get_filtered_count(cls, filter_str):
     #     return cls.query.filter(cls.full_name.ilike('%' + filter_str + '%')).count()
 
+    def has_book(self, book):
+        return self.books.filter(users_books.c.book_id == book.id).count() > 0
+
     def save(self):
         try:
             db.session.add(self)

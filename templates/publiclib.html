@@ -78,9 +78,15 @@
                         <td>{{ book.year }}</td>
                         <td align="center"><a download href="static/books/{{ book.file }}" class="btn btn-default"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a></td>
                         <td align="center">
-                            <a href="{{ url_for('book_share', book_id=book.id) }}" class="btn btn-{% if book.is_public %}primary{% else %}default{% endif %}">
+                            {% if not current_user.has_book(book) %}
+                            <a href="{{ url_for('book_get', book_id=book.id) }}" class="btn btn-{% if book.is_public %}primary{% else %}default{% endif %}">
                                 <span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span>
                             </a>
+                            {% else %}
+                            <a href="{{ url_for('main') }}" class="btn btn-default">
+                                <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+                            </a>
+                            {% endif %}
                         </td>
                     </tr>
                     {% endfor %}

@@ -56,7 +56,7 @@ class Book(db.Model):
 
     @classmethod
     def get_public(cls):
-        return cls.query.filter(cls.is_public is True).all()
+        return cls.query.filter(cls.is_public).all()
 
     @classmethod
     def get_by_login(cls, login):
