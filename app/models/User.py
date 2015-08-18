@@ -71,6 +71,9 @@ class User(db.Model, UserMixin):
     def has_book(self, book):
         return self.books.filter(users_books.c.book_id == book.id).count() > 0
 
+    def get_books(self):
+        return self.books.filter(users_books.c.user_login == self.login).all()
+
     def save(self):
         try:
             db.session.add(self)

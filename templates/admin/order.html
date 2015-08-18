@@ -127,7 +127,7 @@
 
                         <div class="panel-body">
 
-                            <div class="row" style="margin-top: 10px;">
+                            <div class="row">
                                 <div class="col-md-2">Изменить статус</div>
                                 <div class="col-md-10">
 
@@ -146,21 +146,37 @@
                                     </label>
 
                                     <label class="radio-inline">
-                                        <a href="{{ url_for('admin_order_set_status', order_id=o.id, new_status_code=2) }}" style="text-decoration: none;">
-                                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="2">
-                                            <span class="label label-success">Выполнен</span>
-                                        </a>
+                                        <input type="radio" name="optionsRadios" id="optionsRadios2" value="2">
+                                        <span class="label label-success">Выполнен</span>
                                     </label>
 
                                     <label class="radio-inline">
-                                        <a href="{{ url_for('admin_order_set_status', order_id=o.id, new_status_code=3) }}" style="text-decoration: none;">
-                                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="3">
-                                            <span class="label label-danger">Отклонен</span>
-                                        </a>
+                                        <input type="radio" name="optionsRadios" id="optionsRadios3" value="3">
+                                        <span class="label label-danger">Отклонен</span>
                                     </label>
 
                                 </div>
                             </div>
+
+                            <form id="close-order-block" method="POST" action="{{ url_for('admin_order_resolve', order_id=o.id) }}" hidden>
+
+                                <div class="row" style="margin-top:10px;">
+                                    <div class="col-md-2">Выберите книгу</div>
+                                    <div class="col-md-5">
+
+                                            <input type="text" id="book" class="form-control">
+                                            <input type="hidden" id="book_id" name="book_id" >
+
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin-top:10px;">
+                                     <div class="col-md-10 col-md-offset-2">
+                                        <input type="submit" class="btn btn-success" id="close-order-btn" disabled value="Отметить как выполненный">
+                                    </div>
+                                </div>
+
+                            </form>
 
                         </div>
 
@@ -186,6 +202,30 @@
     $(document).ready(function() {
 
         $('#optionsRadios{{ o.status.id }}').attr('checked', 'checked');
+
+        $('[type="radio"]').click(function() {
+            if ($(this).val() == 2) {
+                $('#close-order-block').show();
+            } else {
+                $('#close-order-block').hide();
+            }
+        });
+
+        $('#book').typeahead({
+             ajax: {
+                url: "{{ url_for('book_public_json') }}",
+                method: 'GET',
+                timeout: 300,
+                triggerLength: 4,
+                resultCollection: 'books'
+            },
+            display: 'text',
+            val: 'id',
+            itemSelected: function(text, id) {
+                $('#close-order-btn').attr('disabled', false);
+                $('#book_id').val(id);
+            }
+        });
 
     });
 

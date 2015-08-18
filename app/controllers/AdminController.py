@@ -1,4 +1,4 @@
-from flask import render_template, url_for
+from flask import render_template, url_for, request
 from flask_login import login_required, current_user
 # app
 from app import app, User, Order, OrderStatus, Book
@@ -44,6 +44,22 @@ def admin_order_set_status(order_id, new_status_code):
     o.status_id = new_status_code
     o.save()
     return redirect(url_for('admin_order', order_id=order_id))
+
+
+@app.route("/admin/order/<order_id>/resolve", methods=['POST'])
+@login_required
+def admin_order_resolve(order_id):
+    if not current_user.is_admin:
+        abort(403)  # access denied
+    o = Order.get(order_id)
+    if not o:
+        abort(404)
+    if 'book_id' not in request.form:
+        abort(400)
+    o.status_id = 2  # resolved
+    o.book_id = request.form['book_id']
+    o.save()
+    return redirect(url_for('admin_orders'))
 
 
 @app.route("/admin/public")

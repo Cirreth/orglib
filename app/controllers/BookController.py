@@ -1,10 +1,17 @@
 import os
-from flask import render_template, request, url_for
+from flask import render_template, request, url_for, jsonify
 # app
 from app import app, Book
 from flask_login import login_required, current_user
 from webargs.flaskparser import parser, abort
-from werkzeug.utils import redirect, secure_filename
+from werkzeug.utils import redirect
+
+
+@app.route('/books/json/public')
+@login_required
+def book_public_json():
+    books = Book.get_public()
+    return jsonify({"books": [{"id": b.id, "text": b.author + " - " + b.name} for b in books]})
 
 
 @app.route("/books/create", methods=['GET', 'POST'])
@@ -24,7 +31,7 @@ def book_create():
     # file
     file = request.files['file']
     extension = file.filename.split('.')[-1] or ""
-    book.file = book.id+'.'+extension
+    book.file = book.id + '.' + extension
     file.save(os.path.join(app.config['UPLOAD_FOLDER'], book.file))
     #
     book.added_by_login = current_user.login
